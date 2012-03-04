@@ -21,7 +21,7 @@ switch($act){
     case 'login':
         $username = $_POST['username'];
         $password = md5($_POST['pass']); 
-        $query = mysql_query("SELECT * FROM staff WHERE username='$username' AND password='$password'");
+        $query = mysql_query("SELECT * FROM ".$dbprefix."staff WHERE username='$username' AND password='$password'");
         //check login details
 	if(empty($_POST['username']) || empty($_POST['pass']) || mysql_num_rows($query) == 0){
             //raise error
