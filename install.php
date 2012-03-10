@@ -71,6 +71,29 @@ mysql_select_db($sqldb);
 
 ?>';
         fwrite(fopen('inc/conf.php', 'w'), $confdata);
+        print '<script> window.location = "install.php?act=4" </script>';
+        break;
+    case '4':
+        require 'inc/conf.php';
+        print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+            <html xmlns="http://w3.org/1999/xhtml">
+            <head>
+	       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	       <link rel="stylesheet" type="text/css" href="style/skin.css" />
+	       <title>Step 4: Administrator Account</title>
+            </head>
+	    <body class="center">
+                <form action="install.php?act=5" method="post">
+                    <p>Username: <input type="text" name="username" /></p>
+                    <p>Password: <input type="password" name="pass" /></p>
+                    <p><input type="submit" value="Finish Installation!" /></p>';
+        break;
+    case '5':
+        require 'inc/conf.php';
+        $username = $_POST['username'];
+        $password = md5($_POST['password']);
+        mysql_query("INSERT INTO staff (username, password) VALUES( '$username', '$password' )") or die(mysql_error()); 
+        print '<font color="red" size="20">Please delete install.php NOW!</font>';
         break;
     default:
         print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
